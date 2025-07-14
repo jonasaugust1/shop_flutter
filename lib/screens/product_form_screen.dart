@@ -38,6 +38,12 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
   }
 
   void _submitForm() {
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    if(!isValid) {
+      return;
+    }
+
     _formKey.currentState?.save();
 
     final newProduct = Product(
@@ -69,10 +75,17 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
             children: [
               TextFormField(
                 decoration: InputDecoration(
-                  labelText: 'Nome'
+                  labelText: 'Nome',
                 ),
                 textInputAction: TextInputAction.next,
                 onSaved: (name) => _formData['name'] = name,
+                validator: (name) {
+                  if(name == null || name.trim().isEmpty) {
+                    return 'Nome é obrigatório';
+                  }
+
+                  return null;
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(
@@ -81,6 +94,23 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 onSaved: (price) => _formData['price'] = double.tryParse(price ?? ''),
+                validator: (price) {
+                  if(price == null || price.trim().isEmpty) {
+                    return 'Preço é obrigatório';
+                  }
+
+                  final priceParsed = double.tryParse(price.replaceFirst(',', '.'));
+
+                  if(priceParsed == null) {
+                    return 'Preço deve conter apenas números';
+                  }
+
+                  if(priceParsed <= 0) {
+                    return 'Proço deve ser maior que zero';
+                  }
+
+                  return null;
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(
