@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/cart.dart';
+import 'package:shop/models/order_list.dart';
 import 'package:shop/widgets/cart_item_widget.dart';
 
 class CartScreen extends StatelessWidget {
@@ -57,7 +58,8 @@ class CartScreen extends StatelessWidget {
                       const Spacer(),
                       TextButton(
                         onPressed: () {
-                          // Implement checkout functionality here
+                          Provider.of<OrderList>(context, listen: false).addOrder(cart);
+                          cart.clear();
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: Theme.of(context).colorScheme.primary,
