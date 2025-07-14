@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop/models/product.dart';
+import 'package:shop/screens/product_datail_screen.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({super.key, required this.product});
@@ -34,14 +35,22 @@ class ProductItem extends StatelessWidget {
             },
           ),
         ),
-        child: Image.network(
-          product.imageUrl,
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) => const Icon(
-            Icons.error,
-            size: 50,
-            color: Colors.red,
+        child: GestureDetector(
+          child: Image.network(
+            product.imageUrl,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) => const Icon(
+              Icons.error,
+              size: 50,
+              color: Colors.red,
+            ),
           ),
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              ProductDatailScreen.routeName,
+              arguments: product,
+            );
+          },
         ),
       ),
     );
