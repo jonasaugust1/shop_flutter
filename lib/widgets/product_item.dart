@@ -16,9 +16,8 @@ class ProductItem extends StatelessWidget {
           leading: IconButton(
             icon: Icon(
               product.isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.secondary,
             ),
-            color: Theme.of(context).colorScheme.secondary,
             onPressed: () => product.toggleFavoriteStatus(),
           ),
           title: Text(
@@ -26,11 +25,10 @@ class ProductItem extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.shopping_cart,
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.secondary,
             ),
-            color: Theme.of(context).colorScheme.secondary,
             onPressed: () {
               // Add to cart functionality can be implemented here
             },
