@@ -25,6 +25,12 @@ class CartScreen extends StatelessWidget {
             )
           : Column(
             children: [
+               Expanded(
+                child: ListView.builder(
+                  itemCount: cart.itemCount,
+                  itemBuilder: (ctx, i) => CartItemWidget(cartItem: items[i]),
+                ),
+              ),
               Card(
                 margin: const EdgeInsets.all(25),
                 child: Padding(
@@ -59,12 +65,6 @@ class CartScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: cart.itemCount,
-                  itemBuilder: (ctx, i) => CartItemWidget(cartItem: items[i]),
                 ),
               )
             ],
