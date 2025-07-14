@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/product.dart';
@@ -33,6 +31,25 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
     super.dispose();
   }
 
+  @override
+  void didChangeDependencies() {
+    if(_formData.isEmpty) {
+      final arg = ModalRoute.of(context)?.settings.arguments;
+
+      if(arg != null) {
+        final product = arg as Product;
+        _formData['id'] = product.id;
+        _formData['name'] = product.name;
+        _formData['price'] = product.price;
+        _formData['description'] = product.description;
+        _formData['imageUrl'] = product.imageUrl;
+
+        imageUrlController.text = product.imageUrl;
+      }
+    }
+    super.didChangeDependencies();
+  }
+
   void updateImage() {
     setState(() {
       
@@ -48,7 +65,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
 
     _formKey.currentState?.save();
 
-    Provider.of<ProductList>(context, listen: false).addProductFromData(_formData);
+    Provider.of<ProductList>(context, listen: false).saveProduct(_formData);
   }
 
   @override
@@ -70,6 +87,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
           child: ListView(
             children: [
               TextFormField(
+                initialValue: _formData['name'],
                 decoration: InputDecoration(
                   labelText: 'Nome',
                 ),
@@ -84,6 +102,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 },
               ),
               TextFormField(
+                initialValue: _formData['price'].toString(),
                 decoration: InputDecoration(
                   labelText: 'Preço'
                 ),
@@ -109,6 +128,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 },
               ),
               TextFormField(
+                initialValue: _formData['description'],
                 decoration: InputDecoration(
                   labelText: 'Descrição'
                 ),
