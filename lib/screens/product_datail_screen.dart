@@ -11,7 +11,7 @@ class ProductDatailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(product.title),
+        title: Text(product.name),
       ),
       body: SingleChildScrollView(
         child: Column(
