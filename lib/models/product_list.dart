@@ -4,24 +4,13 @@ import 'package:shop/models/product.dart';
 
 class ProductList with ChangeNotifier {
   final List<Product> _items = dummyProducts;
-  bool _showFavoritesOnly = false;
 
   List<Product> get items {
-    if (_showFavoritesOnly) {
-      return _items.where((product) => product.isFavorite).toList();
-    }
-    
     return [..._items];
   }
 
-  void showFavoritesOnly() {
-    _showFavoritesOnly = true;
-    notifyListeners();
-  }
-
-  void showAll() {
-    _showFavoritesOnly = false;
-    notifyListeners();
+  List<Product> get favoriteItems {
+    return _items.where((product) => product.isFavorite).toList();
   }
 
   void addProduct(Product product) {
@@ -39,3 +28,24 @@ class ProductList with ChangeNotifier {
     notifyListeners();
   }
 }
+
+// GLOBAL STATE MANAGEMENT EXAMPLE
+//  bool _showFavoritesOnly = false;
+
+//   List<Product> get items {
+//     if (_showFavoritesOnly) {
+//       return _items.where((product) => product.isFavorite).toList();
+//     }
+    
+//     return [..._items];
+//   }
+
+//   void showFavoritesOnly() {
+//     _showFavoritesOnly = true;
+//     notifyListeners();
+//   }
+
+//   void showAll() {
+//     _showFavoritesOnly = false;
+//     notifyListeners();
+//   }

@@ -8,15 +8,20 @@ enum FilterOptions {
   all,
 }
 
-class ProductsOverviewScreen extends StatelessWidget {
+class ProductsOverviewScreen extends StatefulWidget {
   const ProductsOverviewScreen({super.key});
 
   static const routeName = '/products-overview';
 
   @override
-  Widget build(BuildContext context) {
-    final productList = Provider.of<ProductList>(context);
+  State<ProductsOverviewScreen> createState() => _ProductsOverviewScreenState();
+}
 
+class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
+  bool _showFavoritesOnly = false;
+  
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Products Overview'),
@@ -35,16 +40,14 @@ class ProductsOverviewScreen extends StatelessWidget {
             ];
           },
           onSelected: (value) {
-            if (value == FilterOptions.favorites) {
-              productList.showFavoritesOnly();
-            } else {
-              productList.showAll();
-            }
+            setState(() {
+              _showFavoritesOnly = value == FilterOptions.favorites ? true : false;
+            });
           },
           )
         ],
       ),
-      body: const ProductGrid(),
+      body: ProductGrid(showFavoritesOnly: _showFavoritesOnly,),
     );
   }
 }
