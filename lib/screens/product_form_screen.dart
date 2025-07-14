@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop/models/product.dart';
+import 'package:shop/models/product_list.dart';
 
 class ProductFormScreen extends StatefulWidget {
   const ProductFormScreen({super.key});
@@ -16,7 +18,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
   final imageUrlController = TextEditingController();
   final _imageUrlFocus = FocusNode();
   final _formKey = GlobalKey<FormState>();
-  final _formData = Map<String, dynamic>();
+  final _formData = <String, dynamic>{};
 
   @override
   void initState() {
@@ -46,13 +48,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
 
     _formKey.currentState?.save();
 
-    final newProduct = Product(
-      id: Random().nextDouble().toString(), 
-      name: _formData['name'] as String, 
-      description: _formData['description'] as String, 
-      price: _formData['price'] as double, 
-      imageUrl: _formData['imageUrl'] as String
-    );
+    Provider.of<ProductList>(context, listen: false).addProductFromData(_formData);
   }
 
   @override
