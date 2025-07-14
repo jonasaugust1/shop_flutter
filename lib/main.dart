@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/models/product_list.dart';
 import 'package:shop/screens/product_datail_screen.dart';
 import 'package:shop/screens/products_overview_screen.dart';
 
@@ -11,25 +13,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-          secondary: Colors.deepOrange
+    return ChangeNotifierProvider(
+      create: (ctx) => ProductList(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.deepPurple,
+            secondary: Colors.deepOrange
+          ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.deepPurple,
+            foregroundColor: Colors.white,
+            centerTitle: true
+          ),
         ),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.deepPurple,
-          foregroundColor: Colors.white,
-          centerTitle: true
-        ),
+        home: ProductsOverviewScreen(),
+        debugShowCheckedModeBanner: false,
+        routes: {
+          ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
+          ProductDatailScreen.routeName: (ctx) => ProductDatailScreen(),
+        },
       ),
-      home: ProductsOverviewScreen(),
-      debugShowCheckedModeBanner: false,
-      routes: {
-        ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
-        ProductDatailScreen.routeName: (ctx) => ProductDatailScreen(),
-      },
     );
   }
 }

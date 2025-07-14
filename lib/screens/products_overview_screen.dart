@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:shop/data/dummy_data.dart';
-import 'package:shop/models/product.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/models/product_list.dart';
 import 'package:shop/widgets/product_item.dart';
 
 class ProductsOverviewScreen extends StatelessWidget {
-  ProductsOverviewScreen({super.key});
+  const ProductsOverviewScreen({super.key});
 
   static const routeName = '/products-overview';
 
-  final List<Product> products = dummyProducts;
-
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ProductList>(context);
+    final products = provider.items;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Products Overview'),
